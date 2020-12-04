@@ -1,5 +1,5 @@
+import fetch from 'node-fetch';
 import { userGameHistories } from '../../models';
-import fetch from 'node-fetch'
 
 class gameController {
   static rpsIndex = (req, res) => {
@@ -8,13 +8,12 @@ class gameController {
 
   static getGameHistory = async (req, res) => {
     await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/game/history/${req.session.userId}`)
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         if (data.status === 200) {
           return res.render('game_history', { title: 'Game History', username: req.session.username, history: data.history });
-        } else {
-          return res.render('game_history', { title: 'Game History', username: req.session.username, history: '' });
         }
+        return res.render('game_history', { title: 'Game History', username: req.session.username, history: '' });
       })
       .catch((e) => console.log(e));
   };

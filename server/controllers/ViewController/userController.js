@@ -115,10 +115,10 @@ class userController {
         if (err) {
           return res.render('index', { title: 'Home', login, username: '' });
         }
-        res.clearCookie(process.env.SESSION_NAME);
-
-        return res.redirect('/auth/login');
+        return res.clearCookie(process.env.SESSION_NAME);
       });
+
+      return res.redirect('/auth/login');
     } catch {
       return res.redirect('/profile');
     }
