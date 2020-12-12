@@ -16,6 +16,10 @@ main h2 {
     font-size: 3vw;
 }
 
+.card {
+    background-color: bisque;
+    border-radius: 7%;
+}
 
 /* Style for Smartphone */
 @media screen and (max-width: 400px){
@@ -28,7 +32,5 @@ main h2 {
     height: auto;
     }
 
-    .text-vs{
-        font-size: 2em;
-    }
+
 }
