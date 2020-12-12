@@ -39,6 +39,12 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true,
       },
     },
+    isAdmin: {
+      type: DataTypes.BOOLEAN,
+      validate: {
+        notEmpty: true,
+      },
+    },
   }, {
     sequelize,
     modelName: 'userGames',
