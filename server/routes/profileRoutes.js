@@ -3,13 +3,13 @@ import changePasswordValidation from '../middlewares/validation/changePasswordVa
 import editProfileValidation from '../middlewares/validation/editProfileValidation';
 import userController from '../controllers/ViewController/userController';
 
-const profileRouter = express.Router();
+const router = express.Router();
 
-profileRouter.get('/', userController.getProfile);
-profileRouter.get('/edit', userController.getEditProfile);
-profileRouter.get('/changePassword', userController.getChangePassword);
-profileRouter.patch('/edit', editProfileValidation, userController.patchEditProfile);
-profileRouter.patch('/changePassword', changePasswordValidation, userController.patchChangePassword);
-profileRouter.delete('/deleteUser', userController.deleteUser);
+router.get('/', userController.getProfile);
+router.get('/edit', userController.getEditProfile);
+router.get('/changePassword', userController.getChangePassword);
+router.patch('/edit', editProfileValidation, userController.patchEditProfile);
+router.patch('/changePassword', changePasswordValidation, userController.patchChangePassword);
+router.delete('/deleteUser', userController.deleteUser);
 
-export default profileRouter;
+export default router;

@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.get('/', gameController.getRoom);
 
+// Game History
 router.get('/history', gameController.getGameHistory);
 router.post('/history', gameController.postGameHistory);
 router.delete('/history', gameController.deleteGameHistory);
