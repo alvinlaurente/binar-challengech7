@@ -28,7 +28,8 @@ class gameAPIController {
         player_choice,
         comp_choice,
         result,
-      }).then((history) => res.status(201).json({ status: 201, message: 'new history created', history }))
+      })
+        .then((history) => res.status(201).json({ status: 201, message: 'new history created', history }))
         .catch((e) => console.log(e));
 
       return res.status(201);
@@ -42,7 +43,7 @@ class gameAPIController {
       const { historyId } = req.body;
 
       await userGameHistories.destroy({ where: { historyId } })
-        .then((history) => res.status(200).json({ status: 200, message: `history ${historyId} deleted` }))
+        .then(() => res.status(200).json({ status: 200, message: `history ${historyId} deleted` }))
         .catch((e) => console.log(e));
 
       return res.status(200);
