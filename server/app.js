@@ -7,6 +7,7 @@ import methodOverride from 'method-override';
 import routes from './routes';
 
 const app = express();
+require('dotenv').config();
 
 // Helmet
 app.use(helmet({
