@@ -1,37 +1,40 @@
 import bcrypt from 'bcrypt';
+import auth from '../../middlewares/authentication';
 import { userGames, userGameBiodata } from '../../models';
 
 class authController {
   static postSignup = async (req, res) => {
     try {
-      const { email, username } = req.body;
+      const {
+        name, email, username, password,
+      } = req.body;
 
       // Check email is already in database
       const emailExist = await userGames.findOne({ where: { email } });
-      if (emailExist) return res.status(409).json({ status: 409, message: 'Email is already taken.' });
+      if (emailExist) return res.status(409).json({ message: 'Email is already taken.' });
 
       // Check username is already in database
       const usernameExist = await userGames.findOne({ where: { username } });
-      if (usernameExist) return res.status(409).json({ status: 409, message: 'Username is already taken.' });
+      if (usernameExist) return res.status(409).json({ message: 'Username is already taken.' });
 
       // Hash Password
-      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+      const hashedPassword = await bcrypt.hash(password, 10);
 
       await userGames.create({
-        email: req.body.email,
-        username: req.body.username,
+        email,
+        username,
         password: hashedPassword,
       })
         .then((data) => userGameBiodata.create({
           userId: data.userId,
-          name: req.body.name,
+          name,
         }))
-        .then((user) => res.status(201).json({ status: 201, message: 'Added new user.', user }))
-        .catch((e) => console.log(e));
+        .then((user) => res.status(201).json({ status: 201, message: `User ${user.userId} added.`, user }))
+        .catch((e) => res.status(400).json({ message: 'Failed to signup.' }));
 
       return res.status(201);
     } catch {
-      return res.status(400).json({ status: 400, message: 'Failed to signup.' });
+      return res.status(400).json({ message: 'Failed to signup.' });
     }
   };
 
@@ -41,17 +44,24 @@ class authController {
 
       // Check stored username from database
       const validUser = await userGames.findOne({ where: { username } });
-      if (!validUser) return res.status(400).json({ status: 400, message: 'Username is wrong.' });
+      if (!validUser) return res.status(401).json({ message: 'Username is wrong.' });
 
       // Check password from username and compare
       const validPassword = await bcrypt.compare(password, validUser.password);
-      if (!validPassword) return res.status(400).json({ status: 400, message: 'Password is wrong.' });
+      if (!validPassword) return res.status(401).json({ message: 'Password is wrong.' });
 
-      return res.status(200).json({
-        status: 200, message: `User ${validUser.username} login.`, userId: validUser.userId, username: validUser.username,
-      });
+      return auth.jwtAuth.sign(
+        {
+          userId: validUser.userId,
+          username: validUser.username,
+        },
+        (token) => res.status(200).json({
+          status: 200, message: `User ${validUser.username} login.`, userId: validUser.userId, username: validUser.username, token,
+        }),
+        () => res.status(500).json({ message: 'Internal Server Error.' }),
+      );
     } catch {
-      return res.status(400).json({ status: 400, message: 'Failed to login.' });
+      return res.status(401).json({ status: 401, message: 'Unathorized.' });
     }
   };
 

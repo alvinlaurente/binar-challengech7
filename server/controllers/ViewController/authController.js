@@ -1,61 +1,53 @@
 import fetch from 'node-fetch';
-import checkUserId from '../../middlewares/authentication/checkUserId';
 
 class authController {
-  static getSignup = (req, res) => {
-    const login = checkUserId(req.session);
-    res.render('signup', { title: 'Sign Up', login, validateError: '' });
-  };
+  static getSignup = (req, res) => res.status(200).render('signup', { title: 'Sign Up', login: false, validateError: '' });
 
   static postSignup = async (req, res) => {
-    const login = checkUserId(req.session);
-
     await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/auth/signup/`, { method: 'POST', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 201) {
           return res.redirect('/auth/login');
         }
-        return res.render('signup', { title: 'signup', login, validateError: data.message });
+        return res.render('signup', { title: 'signup', login: false, validateError: data.message });
       })
       .catch((e) => console.log(e));
   };
 
-  static getLogin = (req, res) => {
-    const login = checkUserId(req.session);
-    return res.render('login', { title: 'Login', login, validateError: '' });
-  };
+  static getLogin = (req, res) => res.status(200).render('login', { title: 'Login', login: false, validateError: '' });
 
   static postLogin = async (req, res) => {
-    const login = checkUserId(req.session);
-
     await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/auth/login/`, { method: 'POST', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 200) {
-          if (data.userId && data.username) {
-            req.session.userId = data.userId;
-            req.session.username = data.username;
-          }
-
-          return res.render('index', { title: 'Home', login: true, username: req.session.username });
+          res.cookie(process.env.USERNAME_COOKIE_NAME, data.username);
+          return res.cookie(process.env.TOKEN_COOKIE_NAME, `Bearer ${data.token}`, {
+            httpOnly: true,
+            path: '/',
+            expiryDate: new Date(Date.now() + 2 * 60 * 60 * 1000),
+            sameSite: true,
+            // TODO: False for development, use true for production env (HTTPS)
+            secure: false,
+          }).redirect('/');
         }
-        return res.render('login', { title: 'login', login, validateError: data.message });
+        return res.status(200).render('login', { title: 'login', login: false, validateError: data.message });
       })
       .catch((e) => console.log(e));
   };
 
   static logout = async (req, res) => {
-    await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/auth/logout/${req.session.userId}`, { method: 'DELETE' })
+    await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/auth/logout/${req.decoded.userId}`, { method: 'DELETE' })
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 302) {
-          req.session.destroy();
-          res.clearCookie(process.env.SESSION_NAME);
+          res.clearCookie(process.env.USERNAME_COOKIE_NAME);
+          res.clearCookie(process.env.TOKEN_COOKIE_NAME);
 
-          return res.render('login', { title: 'Login', login: false, validateError: '' });
+          return res.redirect('/auth/login');
         }
-        return res.redirect('/profile');
+        return res.redirect('/');
       })
       .catch((e) => console.log(e));
   }

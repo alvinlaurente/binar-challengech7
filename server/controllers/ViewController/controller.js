@@ -1,10 +1,18 @@
-import checkUserId from '../../middlewares/authentication/checkUserId';
+import jwtAuth from '../../middlewares/authentication/jwtAuth';
 
 class Controller {
-  static homeIndex = (req, res) => {
-    const login = checkUserId(req.session);
-    res.render('index', { title: 'Home', login, username: req.session.username || '' });
+  static index = (req, res) => {
+    console.log(req.cookies.username);
+    if (req.cookies.username) return res.render('index', { title: 'Home', login: true, username: req.cookies.username });
+    return res.render('index', { title: 'Home', login: false, username: '' });
   };
+
+  static pageNotFound = (req, res) => {
+    if (req.cookies.username) {
+      return res.status(404).render('404', { title: '404', login: true, username: req.cookies.username });
+    }
+    return res.status(404).render('404', { title: '404', login: false, username: '' });
+  }
 }
 
 export default Controller;
