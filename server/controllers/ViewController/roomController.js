@@ -22,7 +22,7 @@ class RoomController {
       try {
         const room = await room.createRoom();
 
-        return res.status(200).json({ message: 'Succes create room' });
+        return res.status(200).json({ message: 'Success create room' });
       } catch (err) {
         return res.status(500).json(err);
       }

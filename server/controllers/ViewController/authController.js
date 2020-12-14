@@ -22,6 +22,7 @@ class authController {
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 200) {
+          res.cookie(process.env.USERNAME_COOKIE_NAME, data.username);
           return res.cookie(process.env.TOKEN_COOKIE_NAME, `Bearer ${data.token}`, {
             httpOnly: true,
             path: '/',
@@ -41,6 +42,7 @@ class authController {
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 302) {
+          res.clearCookie(process.env.USERNAME_COOKIE_NAME);
           res.clearCookie(process.env.TOKEN_COOKIE_NAME);
 
           return res.redirect('/auth/login');
