@@ -56,7 +56,7 @@ class userController {
   };
 
   static deleteUser = async (req, res) => {
-    await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/profile/deleteUser/${req.decoded.userId}`, { method: 'DELETE' })
+    await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/profile/deleteUser`, { method: 'DELETE', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 200) {

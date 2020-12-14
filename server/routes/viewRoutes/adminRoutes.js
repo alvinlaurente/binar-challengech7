@@ -1,8 +1,9 @@
 import express from 'express';
 import adminController from '../../controllers/ViewController/adminController';
 
-const authRouter = express.Router();
+const router = express.Router();
 
-authRouter.get('/userlist', adminController.getUserlist);
+router.get('/userlist', adminController.getUserlist);
+router.delete('/deleteUser', adminController.deleteUser);
 
-export default authRouter;
+export default router;
