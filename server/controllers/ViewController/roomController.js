@@ -1,10 +1,3 @@
-// export default class ViewController {
-// static room = (req, res) => {
-//     return res.render('room')
-//   }
-// //
-// import { room, userGames } from '../models'
-
 import { room, userGames } from '../../models';
 
 class RoomController {

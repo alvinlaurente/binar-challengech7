@@ -80,7 +80,7 @@ class userController {
 
   static deleteUser = async (req, res) => {
     try {
-      await userGames.destroy({ where: { userId: req.params.id } })
+      await userGames.destroy({ where: { userId: req.body.userId } })
         .then(() => res.status(200).json({ status: 200, message: `User ${req.params.id} data deleted.` }))
         .catch((e) => console.log(e));
 

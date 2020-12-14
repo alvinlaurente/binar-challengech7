@@ -56,12 +56,12 @@ class userController {
   };
 
   static deleteUser = async (req, res) => {
-    await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/profile/deleteUser/${req.decoded.userId}`, { method: 'DELETE' })
+    await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/profile/deleteUser`, { method: 'DELETE', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 200) {
-          res.clearCookie(process.env.USERNAME_COOKIE_NAME);
-          res.clearCookie(process.env.TOKEN_COOKIE_NAME);
+          res.clearCookie('username');
+          res.clearCookie(process.env.TOKEN_COOKIE);
 
           return res.render('login', { title: 'Login', login: false, validateError: '' });
         }
