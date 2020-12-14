@@ -4,7 +4,6 @@ import profileRouter from './profileRoutes';
 import gameRouter from './gameRoutes';
 import blockUnauthenticated from '../middlewares/authentication/blockUnauthenticated';
 import controller from '../controllers/ViewController/controller';
-import ViewController from '../controllers/ViewController/roomController';
 
 const router = express.Router();
 

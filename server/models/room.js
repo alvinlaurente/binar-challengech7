@@ -1,13 +1,19 @@
 import { Model } from 'sequelize';
+const crypto = require('crypto');
 module.exports = (sequelize, DataTypes) => {
   class room extends Model {
-    static associate(models) {    
-          const { userGames } = models;
-    
-          room.belongsTo(userGames, { foreignKey: 'userId1', as: 'userData1' });
-          room.belongsTo(userGames, { foreignKey: 'userId2', as: 'userData2' });
-        }
+    static associate(models) {  
+    }  
+      static createRoom = () => {
+        const id = format(crypto.randomBytes(2), 'dec')
+  
+        return this.create({
+          id,
+          roomName: id,
+        })
       }
+    }
+  
 
   room.init({
     id: {
