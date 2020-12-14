@@ -2,8 +2,8 @@
 // Otherwise, pass request to next handler
 // This is useful so the logged in user can't access signup or login page
 const blockAuthenticated = (req, res, next) => {
-  if (req.session.userId) {
-    res.render('index', { title: 'Home', login: true, username: req.session.username || '' });
+  if (req.cookies.access_token) {
+    return res.redirect('/');
   } else next();
 };
 

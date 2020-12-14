@@ -6,7 +6,7 @@ export default class jwtAuth {
     expiresIn: 7200,
   }
 
-  static sign = (payload, success, error = () => {}) => jwt.sign(
+  static sign = (payload, success, error) => jwt.sign(
     payload,
     process.env.JWT_SECRET,
     this.DEFAULT_OPTIONS,
@@ -16,7 +16,12 @@ export default class jwtAuth {
     },
   )
 
-  static verify = () => {
-
-  }
+  static verify = (token, success, error) => jwt.verify(
+    token,
+    process.env.JWT_SECRET,
+    (e, decoded) => {
+      if (e) return error(e);
+      return success(decoded);
+    },
+  )
 }

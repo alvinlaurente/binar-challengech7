@@ -1,9 +1,9 @@
 import blockAuthenticated from './blockAuthenticated';
-import blockUnauthenticated from './blockUnauthenticated';
 import jwtAuth from './jwtAuth';
+import verifyToken from './verifyToken';
 
 export default {
   blockAuthenticated,
-  blockUnauthenticated,
   jwtAuth,
+  verifyToken,
 };

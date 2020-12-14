@@ -2,34 +2,35 @@ import fetch from 'node-fetch';
 
 class userController {
   static getProfile = async (req, res) => {
-    await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/profile/${req.session.userId}`)
+    await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/profile/${req.decoded.userId}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 403) {
           return res.render('changePassword', {
-            title: 'Change Password', login: true, username: req.session.username || '', validateError: data.message,
+            title: 'Change Password', login: true, username: req.decoded.username || '', validateError: data.message,
           });
         }
         if (data.status === 200) {
           return res.render('profile', {
-            title: req.session.username, login: true, user: data.profile, username: req.session.username,
+            // eslint-disable-next-line max-len
+            title: req.decoded.username, login: true, user: data.profile, username: req.decoded.username,
           });
         }
-        return res.render('profile', { title: 'Profile', login: true, username: req.session.username || '' });
+        return res.render('profile', { title: 'Profile', login: true, username: req.decoded.username || '' });
       })
       .catch((e) => console.log(e));
   };
 
   static getEditProfile = async (req, res) => res.render('editProfile', {
-    title: 'Edit Profile', login: true, username: req.session.username || '', validateError: '',
+    title: 'Edit Profile', login: true, username: req.decoded.username || '', validateError: '',
   });
 
   static getChangePassword = (req, res) => res.render('changePassword', {
-    title: 'Change Password', login: true, username: req.session.username || '', validateError: '',
+    title: 'Change Password', login: true, username: req.decoded.username || '', validateError: '',
   });
 
   static patchEditProfile = async (req, res) => {
-    await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/profile/edit/${req.session.userId}`, { method: 'PATCH', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
+    await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/profile/edit/${req.decoded.userId}`, { method: 'PATCH', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 201) {
@@ -41,7 +42,7 @@ class userController {
   };
 
   static patchChangePassword = async (req, res) => {
-    await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/profile/changePassword/${req.session.userId}&${req.session.username}`, { method: 'PATCH', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
+    await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/profile/changePassword/${req.decoded.userId}&${req.decoded.username}`, { method: 'PATCH', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 200) {
@@ -55,12 +56,11 @@ class userController {
   };
 
   static deleteUser = async (req, res) => {
-    await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/profile/deleteUser/${req.session.userId}`, { method: 'DELETE' })
+    await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/profile/deleteUser/${req.decoded.userId}`, { method: 'DELETE' })
       .then((res) => res.json())
       .then((data) => {
-        if (data.status === 302) {
-          req.session.destroy();
-          res.clearCookie(process.env.SESSION_NAME);
+        if (data.status === 200) {
+          res.clearCookie(process.env.TOKEN_COOKIE_NAME);
 
           return res.render('login', { title: 'Login', login: false, validateError: '' });
         }
