@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 
 class gameController {
-  static getRoom = (req, res) => res.render('rockpaperscissor', { title: 'Rock Paper Scissor', username: req.decoded.username });
+  static getRoom = (req, res) => res.render('rockpaperscissor', { title: 'Rock Paper Scissor', username: req.cookies.username });
 
   static getGameHistory = async (req, res) => {
     await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/game/history/${req.decoded.userId}`)
