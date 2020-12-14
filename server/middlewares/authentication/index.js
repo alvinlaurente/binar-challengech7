@@ -1,9 +1,9 @@
 import blockAuthenticated from './blockAuthenticated';
 import blockUnauthenticated from './blockUnauthenticated';
-import checkUserId from './checkUserId';
+import jwtAuth from './jwtAuth';
 
 export default {
   blockAuthenticated,
   blockUnauthenticated,
-  checkUserId,
+  jwtAuth,
 };

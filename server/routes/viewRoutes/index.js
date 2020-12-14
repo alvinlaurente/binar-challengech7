@@ -7,7 +7,7 @@ import gameRoutes from './gameRoutes';
 const router = express.Router();
 
 router.use('/auth', authRoutes);
-router.use('/profile', [auth.blockUnauthenticated], userRoutes);
-router.use('/game', [auth.blockUnauthenticated], gameRoutes);
+router.use('/profile', userRoutes);
+router.use('/game', gameRoutes);
 
 export default router;

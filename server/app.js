@@ -2,7 +2,8 @@ import express from 'express';
 import helmet from 'helmet';
 import path from 'path';
 import logger from 'morgan';
-import session from 'express-session';
+import cookieParser from 'cookie-parser';
+// import session from 'express-session';
 import methodOverride from 'method-override';
 import routes from './routes';
 
@@ -37,21 +38,22 @@ app.use(express.urlencoded({ extended: true }));
 
 // Session & Cookies - Session store method use in-memory storage for development env
 // TODO : Change Session store for production env
-const expiryDate = new Date(Date.now() + 2 * 60 * 60 * 1000); // 2 hours
-app.use(session({
-  name: process.env.SESSION_NAME,
-  resave: false,
-  saveUninitialized: false,
-  secret: process.env.SESSION_SECRET,
-  cookie: {
-    httpOnly: true,
-    path: '/',
-    expiryDate,
-    sameSite: true,
-    // TODO: False for development, use true for production env (HTTPS)
-    secure: false,
-  },
-}));
+// const expiryDate = new Date(Date.now() + 2 * 60 * 60 * 1000); // 2 hours
+// app.use(session({
+//   name: process.env.SESSION_NAME,
+//   resave: false,
+//   saveUninitialized: false,
+//   secret: process.env.SESSION_SECRET,
+//   cookie: {
+//     httpOnly: true,
+//     path: '/',
+//     expiryDate,
+//     sameSite: true,
+//     // TODO: False for development, use true for production env (HTTPS)
+//     secure: false,
+//   },
+// }));
+app.use(cookieParser());
 
 // Method Override
 app.use(methodOverride('_method'));

@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+import auth from '../../middlewares/authentication';
 import { userGames, userGameBiodata } from '../../models';
 
 class authController {
@@ -47,9 +48,16 @@ class authController {
       const validPassword = await bcrypt.compare(password, validUser.password);
       if (!validPassword) return res.status(400).json({ status: 400, message: 'Password is wrong.' });
 
-      return res.status(200).json({
-        status: 200, message: `User ${validUser.username} login.`, userId: validUser.userId, username: validUser.username,
-      });
+      return auth.jwtAuth.sign(
+        {
+          userId: validUser.userId,
+          username: validUser.username,
+        },
+        (token) => res.status(200).json({
+          status: 200, message: `User ${validUser.username} login.`, userId: validUser.userId, username: validUser.username, token,
+        }),
+        () => {},
+      );
     } catch {
       return res.status(400).json({ status: 400, message: 'Failed to login.' });
     }
