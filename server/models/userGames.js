@@ -3,9 +3,10 @@ import { Model } from 'sequelize';
 module.exports = (sequelize, DataTypes) => {
   class userGames extends Model {
     static associate(models) {
-      const { userGameHistories } = models;
+      const { userGameHistories, userRoles } = models;
 
       userGames.hasMany(userGameHistories, { foreignKey: 'userId' });
+      userGames.belongsTo(userRoles, { foreignKey: 'roleRank' });
     }
   }
   userGames.init({
@@ -39,9 +40,9 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true,
       },
     },
-    isAdmin: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: 0,
+    roleRank: {
+      type: DataTypes.INTEGER,
+      defaultValue: 3,
       validate: {
         notEmpty: true,
       },
