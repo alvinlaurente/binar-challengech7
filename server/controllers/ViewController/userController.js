@@ -33,7 +33,7 @@ class userController {
     await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/profile/edit/${req.decoded.userId}`, { method: 'PATCH', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
       .then((res) => res.json())
       .then((data) => {
-        if (data.status === 201) {
+        if (data.status === 200) {
           return res.redirect('/profile');
         }
         return res.redirect('/profile/edit');
@@ -42,7 +42,7 @@ class userController {
   };
 
   static patchChangePassword = async (req, res) => {
-    await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/profile/changePassword/${req.decoded.userId}&${req.decoded.username}`, { method: 'PATCH', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
+    await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/profile/changePassword/${req.decoded.userId}`, { method: 'PATCH', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 200) {

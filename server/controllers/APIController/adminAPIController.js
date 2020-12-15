@@ -3,7 +3,7 @@ import { userGames, userRoles } from '../../models';
 class adminAPIController {
   static getUserlist = async (req, res) => {
     try {
-      await userGames.findAll({
+      return await userGames.findAll({
         attributes: ['userId', 'username', 'roleRank'],
         order: [['roleRank', 'ASC'], ['username', 'ASC']],
         include: [
@@ -14,8 +14,6 @@ class adminAPIController {
         ],
       }).then((users) => res.status(200).json({ status: 200, message: 'Success', users }))
         .catch((error) => res.status(400).json({ error: error.name }));
-
-      return res.status(200);
     } catch {
       return res.status(403).json({ status: 403, message: 'Forbidden.' });
     }
@@ -24,7 +22,7 @@ class adminAPIController {
   static promote = async (req, res) => {
     try {
       const { userId } = req.body;
-      await userGames.findOne({
+      return await userGames.findOne({
         attributes: ['userId', 'email', 'username', ['roleRank', 'previous role rank']],
         where: { userId },
       })
@@ -36,7 +34,6 @@ class adminAPIController {
           return res.status(422).json({ status: 422, message: 'No user found.' });
         })
         .catch((error) => res.status(400).json({ error: error.name }));
-      return res.status(403);
     } catch {
       return res.status(500);
     }
@@ -45,7 +42,7 @@ class adminAPIController {
   static demote = async (req, res) => {
     try {
       const { userId } = req.body;
-      await userGames.findOne({
+      return await userGames.findOne({
         attributes: ['userId', 'email', 'username', ['roleRank', 'previous role rank']],
         where: { userId },
       })
@@ -57,7 +54,6 @@ class adminAPIController {
           return res.status(422).json({ status: 422, message: 'No user found.' });
         })
         .catch((error) => res.status(400).json({ error: error.name }));
-      return res.status(403);
     } catch {
       return res.status(500);
     }
