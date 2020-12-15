@@ -65,7 +65,7 @@ class authController {
     }
   };
 
-  static logout = (req, res) => res.status(302).json({ status: 302, message: 'Session and cookies will be deleted.' })
+  static logout = (req, res) => res.status(200).json({ status: 200, message: 'Session and cookies will be deleted.' })
 }
 
 export default authController;
