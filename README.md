@@ -1,6 +1,8 @@
-# binar-challengech6
+# binar-challengech7
 
-Binar Academy Full Stack Web Development Challenge Chapter 6 - Database with PostgreSQL (Sequelize)
+**Binar Academy Full Stack Web Development Challenge Chapter 7 - Auth & Multiplayer**
+
+**Postman Documentation** : [Click here](https://documenter.getpostman.com/view/13057273/TVspmA4x) or **_https://documenter.getpostman.com/view/13057273/TVspmA4x_**
 
 ### Step-by-step to run the app
 
@@ -29,25 +31,30 @@ Binar Academy Full Stack Web Development Challenge Chapter 6 - Database with Pos
 
 ### Packages used :
 
-- Babel.js : Transcompiler
-- Express : Node.js Framework
-- dotenv : Environment
-- EJS : View Engine
-- ESLint : Linter - airbnb based
-- Morgan : Logger (see the log on node console)
-- Sequelize : ORM for PostgreSQL
 - bcrypt : Password hashing
-- Joi : Form Validation
-- express-session : Authentication (Session & Cookies)
+- cookie-parser : Populate req.cookies
+- dotenv : Environment
+- ejs : View Engine
+- express : Node.js Framework
+- helmet : Secure HTTP headers
+- joi : Form Validation
+- jsonwebtoken : JWT for authentication
 - method-override : Override POST method in form
-- Helmet : Secure HTTP headers
+- morgan : Logger (see the log on node console)
+- node-fetch : window.fetch inside node.js
+- pg : PostgreSQL client
+- sequelize : Sequelize ORM
+- Babel.js : Transcompiler
+- ESLint : Linter - airbnb based
+- nodemon
+- sequelize-cli : Sequelize Command Line Interface (CLI)
 
 ### Folders :
 
 - public -> Serve static files (css, images, js, etc).
 - configs -> config file(s).
 - controllers -> controllers for user interactions.
-- middlewares -> express-session authentication & joi validation.
+- middlewares -> JWT authentication, admin role authentication & joi validation.
 - migrations -> migration for db tables.
 - models -> model mapping.
 - routes -> web routes.

@@ -38,10 +38,10 @@ class authController {
   };
 
   static logout = async (req, res) => {
-    await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/auth/logout/${req.decoded.userId}`, { method: 'DELETE' })
+    await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/auth/logout/${req.decoded.userId}`, { method: 'DELETE', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
       .then((res) => res.json())
       .then((data) => {
-        if (data.status === 302) {
+        if (data.status === 200) {
           res.clearCookie('username');
           res.clearCookie(process.env.TOKEN_COOKIE);
 
