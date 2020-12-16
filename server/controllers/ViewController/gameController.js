@@ -1,7 +1,9 @@
 import fetch from 'node-fetch';
 
 class gameController {
-  static getGame = (req, res) => res.render('rockpaperscissor', { title: 'Rock Paper Scissor', username: req.cookies.username });
+  static play = (req, res) => res.render('playgame', { title: 'PLAY GAME', username: req.cookies.username });
+
+  static singlePlayer = (req, res) => res.render('rockpaperscissor', { title: 'VS COM', username: req.cookies.username });
 
   static getRoom = async (req, res) => {
     await fetch(`http://${process.env.URL}/api/v1/game/room`)
@@ -14,6 +16,18 @@ class gameController {
       })
       .catch((e) => console.log(e));
   };
+
+  static getRoomById = async (req, res) => {
+    await fetch(`http://${process.env.URL}/api/v1/game/room/${req.params.roomId}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status === 200) {
+          return res.status(200);
+        }
+        return res.status(400);
+      })
+      .catch((e) => console.log(e));
+  }
 
   static getGameHistory = async (req, res) => {
     await fetch(`http://${process.env.URL}/api/v1/game/history/${req.decoded.userId}`)
