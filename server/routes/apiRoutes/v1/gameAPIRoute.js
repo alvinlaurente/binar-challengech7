@@ -3,6 +3,7 @@ import gameAPIController from '../../../controllers/APIController/gameAPIControl
 
 const router = express.Router();
 
+router.get('/room', gameAPIController.getRoom);
 router.get('/room/create', gameAPIController.createRoom);
 
 router.get('/history/:id', gameAPIController.getGameHistory);

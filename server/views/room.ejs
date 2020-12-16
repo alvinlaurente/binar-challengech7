@@ -39,13 +39,13 @@
   <!-- End of header -->
 
   <!-- Room -->
-  <div class="container-fluid room" id="room">
-    <div class="row d-flex flex-row justify-content-center align-items-center">
+  <div class="container room" id="room">
+    <div class="row d-flex flex-row justify-content-center align-items-center topCards">
 
       <div class="col-4">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title">Create Room</h4>
+            <h4 class="card-title">CREATE ROOM</h4>
 
             <button type="submit" class="btn btn-warning createRoom" id="createRoom"><strong>CREATE</strong></button>
 
@@ -60,7 +60,7 @@
       <div class="col-4">
         <div class="card">
           <div class="card-body">
-            <h4 class="card-title">Join Room</h4>
+            <h4 class="card-title">JOIN ROOM</h4>
 
             <form action="" method="">
               <div class="form-group">
@@ -72,8 +72,40 @@
           </div>
         </div>
       </div>
-
     </div>
+
+    <div class="row my-5">
+      <div class="col-10 offset-1">
+        <div class="card">
+          <div class="card-body">
+            <h4 class="card-title">ROOM LIST</h4>
+            <div class="generatedRooms">
+              <table class="table table-borderless">
+                <thead class="thead-dark">
+                  <tr style="text-align: center;">
+                    <th scope="col">ROOM CODE</th>
+                    <th scope="col">PLAYER 1</th>
+                    <th scope="col">PLAYER 2</th>
+                    <th scope="col">STATUS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% for(let i=0; i<rooms.length; i++) { %>
+                    <tr>
+                      <td><%= rooms[i].roomId %></td>
+                      <td><%= rooms[i].playerOne_status %></td>
+                      <td><%= rooms[i].playerTwo_status %></td>
+                      <td><%= rooms[i].status %></td>
+                    </tr>
+                  <% } %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
   <!-- End of Room -->
 
@@ -82,6 +114,7 @@
       const showRoomCode = document.getElementById('showRoomCode');
       const createRoom = document.getElementById('createRoom');
       const roomCode = document.getElementById('roomCode');
+      
       createRoom.addEventListener('click', async () => {
         await fetch('http://<%= process.env.URL%>/api/v1/game/room/create')
           .then((res) => res.json())
