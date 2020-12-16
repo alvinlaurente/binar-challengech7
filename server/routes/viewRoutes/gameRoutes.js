@@ -1,14 +1,11 @@
 import express from 'express';
 import gameController from '../../controllers/ViewController/gameController';
-import roomController from '../../controllers/ViewController/roomController';
 
 const router = express.Router();
 
-router.get('/', gameController.getRoom);
+router.get('/', gameController.getGame);
 
-router.get('/room', roomController.getRoom);
-router.post('/create-room', roomController.createRoom);
-router.post('/join-room', roomController.joinRoom);
+router.get('/room', gameController.getRoom);
 
 // Game History
 router.get('/history', gameController.getGameHistory);

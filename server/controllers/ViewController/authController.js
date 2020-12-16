@@ -4,7 +4,7 @@ class authController {
   static getSignup = (req, res) => res.status(200).render('signup', { title: 'Sign Up', login: false, validateError: '' });
 
   static postSignup = async (req, res) => {
-    await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/auth/signup/`, { method: 'POST', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
+    await fetch(`http://${process.env.URL}/api/v1/auth/signup/`, { method: 'POST', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 201) {
@@ -18,7 +18,7 @@ class authController {
   static getLogin = (req, res) => res.status(200).render('login', { title: 'Login', login: false, validateError: '' });
 
   static postLogin = async (req, res) => {
-    await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/auth/login/`, { method: 'POST', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
+    await fetch(`http://${process.env.URL}/api/v1/auth/login/`, { method: 'POST', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 200) {
@@ -38,7 +38,7 @@ class authController {
   };
 
   static logout = async (req, res) => {
-    await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/auth/logout/${req.decoded.userId}`, { method: 'DELETE', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
+    await fetch(`http://${process.env.URL}/api/v1/auth/logout/${req.decoded.userId}`, { method: 'DELETE', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 200) {

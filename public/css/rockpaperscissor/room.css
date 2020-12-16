@@ -26,5 +26,17 @@ body, html {
 }
 
 .room .card {
-    background-color: bisque;
+  background-color: bisque;
+}
+
+.room .card .card-title {
+	font-size: 40px;
+	font-weight: bold;
+}
+
+#showRoomCode {
+	font-size: 20px;
+}
+#showRoomCode span {
+	font-size: 26px;
 }
