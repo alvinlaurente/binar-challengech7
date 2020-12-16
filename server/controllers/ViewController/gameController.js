@@ -1,56 +1,42 @@
-import { userGameHistories } from '../../models';
+import fetch from 'node-fetch';
 
 class gameController {
-  static rpsIndex = (req, res) => {
-    res.render('rockpaperscissor', { title: 'Rock Paper Scissor', username: req.session.username });
-  };
+  static getRoom = (req, res) => res.render('rockpaperscissor', { title: 'Rock Paper Scissor', username: req.cookies.username });
 
   static getGameHistory = async (req, res) => {
-    try {
-      const history = await userGameHistories.findAll({
-        attributes: ['historyId', 'timestamps', 'player_choice', 'comp_choice', 'result'],
-        where: { userId: req.session.userId },
-        order: [['timestamps', 'DESC']],
+    await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/game/history/${req.decoded.userId}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status === 200) {
+          return res.render('game_history', { title: 'Game History', username: req.cookies.username, history: data.history });
+        }
+        return res.render('game_history', { title: 'Game History', username: req.cookies.username, history: '' });
       })
-        .catch((e) => console.log(e));
-
-      return res.render('game_history', { title: 'Game History', username: req.session.username, history });
-    } catch {
-      return res.render('game_history', { title: 'Game History', username: req.session.username, history: '' });
-    }
+      .catch((e) => console.log(e));
   };
 
   static postGameHistory = async (req, res) => {
-    // TODO : Validate request!
-    try {
-      // eslint-disable-next-line camelcase
-      const { player_choice, comp_choice, result } = req.body;
-
-      await userGameHistories.create({
-        timestamps: new Date().toISOString(),
-        userId: req.session.userId,
-        player_choice,
-        comp_choice,
-        result,
-      }).catch((e) => console.log(e));
-
-      return res.status(201);
-    } catch {
-      return res.redirect('/game');
-    }
+    await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/game/history/${req.decoded.userId}`, { method: 'POST', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status === 201) {
+          return res.redirect('/game');
+        }
+        return res.redirect('/');
+      })
+      .catch((e) => console.log(e));
   };
 
   static deleteGameHistory = async (req, res) => {
-    try {
-      const { historyId } = req.body;
-
-      await userGameHistories.destroy({ where: { historyId } })
-        .catch((e) => console.log(e));
-
-      return res.redirect('/game/history');
-    } catch {
-      return res.redirect('/game');
-    }
+    await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/game/history/${req.decoded.userId}`, { method: 'DELETE', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status === 200) {
+          return res.redirect('/game/history');
+        }
+        return res.redirect('/game');
+      })
+      .catch((e) => console.log(e));
   };
 }
 

@@ -3,9 +3,10 @@ import { Model } from 'sequelize';
 module.exports = (sequelize, DataTypes) => {
   class userGames extends Model {
     static associate(models) {
-      const { userGameHistories } = models;
+      const { userGameHistories, userRoles } = models;
 
       userGames.hasMany(userGameHistories, { foreignKey: 'userId' });
+      userGames.belongsTo(userRoles, { foreignKey: 'roleRank' });
     }
   }
   userGames.init({
@@ -35,6 +36,13 @@ module.exports = (sequelize, DataTypes) => {
     },
     password: {
       type: DataTypes.STRING,
+      validate: {
+        notEmpty: true,
+      },
+    },
+    roleRank: {
+      type: DataTypes.INTEGER,
+      defaultValue: 3,
       validate: {
         notEmpty: true,
       },
