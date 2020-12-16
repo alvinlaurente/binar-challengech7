@@ -1,6 +1,6 @@
 import { userGameHistories } from '../../models';
 
-class gameAPIController {
+class gameHistoryAPIController {
   static getGameHistory = async (req, res) => {
     try {
       return await userGameHistories.findAll({
@@ -50,4 +50,4 @@ class gameAPIController {
   };
 }
 
-export default gameAPIController;
+export default gameHistoryAPIController;

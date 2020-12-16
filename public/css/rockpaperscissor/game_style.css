@@ -2,6 +2,7 @@ body, html {
 	scroll-behavior: smooth;
 	text-decoration: none !important;
 	font-family: "Open Sans", sans-serif;
+	background-color: #9c835f;
 }
 
 /* Header */
@@ -21,7 +22,6 @@ body, html {
 	position: absolute;
 	z-index: -1;
 	top: 0;
-	background-color: #9c835f;
 }
 
 /* Game Content */
