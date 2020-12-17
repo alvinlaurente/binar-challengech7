@@ -4,20 +4,32 @@ module.exports = {
       roomId: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.UUID,
+        type: Sequelize.STRING(6),
       },
-      userId1: {
-        allowNull: false,
-        type: Sequelize.UUID,
+      username1: {
+        type: Sequelize.STRING,
+        references: {
+          model: 'userGames',
+          key: 'username',
+        },
+        onDelete: 'set null',
       },
-      userId2: {
-        allowNull: false,
-        type: Sequelize.UUID,
+      username2: {
+        type: Sequelize.STRING,
+        references: {
+          model: 'userGames',
+          key: 'username',
+        },
+        onDelete: 'set null',
       },
       playerOne_status: {
         type: Sequelize.STRING,
       },
       playerTwo_status: {
+        type: Sequelize.STRING,
+      },
+      status: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       createdAt: {

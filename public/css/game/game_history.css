@@ -5,15 +5,20 @@ body, html {
 	background-color: #9c835f;
 }
 
+a {
+  text-decoration: none!important;
+}
+
 /* Header */
 .customHeader div .d-inline-block {
 	line-height: 2;
 }
 
-.customHeader a .headerTitle{
-	font-size: 16px;
+.customHeader .headerTitle{
+	font-size: 30px;
 	font-weight: bold;
 	color: #ffc107;
+	cursor: context-menu;
 }
 
 .bgColor {
