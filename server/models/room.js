@@ -5,8 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       const { userGames } = models;
 
-      room.belongsTo(userGames, { foreignKey: 'userId1', as: 'userData1' });
-      room.belongsTo(userGames, { foreignKey: 'userId2', as: 'userData2' });
+      room.belongsTo(userGames, { foreignKey: 'username1' });
+      room.belongsTo(userGames, { foreignKey: 'username2' });
     }
   }
 
@@ -20,16 +20,16 @@ module.exports = (sequelize, DataTypes) => {
         len: [6, 6],
       },
     },
-    userId1: {
-      type: DataTypes.UUID,
+    username1: {
+      type: DataTypes.STRING,
       validate: {
-        isUUID: 4,
+        isAlphanumeric: true,
       },
     },
-    userId2: {
-      type: DataTypes.UUID,
+    username2: {
+      type: DataTypes.STRING,
       validate: {
-        isUUID: 4,
+        isAlphanumeric: true,
       },
     },
     playerOne_status: {

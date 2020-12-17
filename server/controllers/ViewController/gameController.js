@@ -18,13 +18,13 @@ class gameController {
   };
 
   static getRoomById = async (req, res) => {
-    await fetch(`http://${process.env.URL}/api/v1/game/room/${req.params.roomId}`)
+    await fetch(`http://${process.env.URL}/api/v1/game/room/${req.params.roomId}`, { method: 'PATCH', body: JSON.stringify(req.cookies), headers: { 'Content-Type': 'application/json' } })
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 200) {
-          return res.status(200);
+          console.log(data);
         }
-        return res.status(400);
+        console.log(data);
       })
       .catch((e) => console.log(e));
   }

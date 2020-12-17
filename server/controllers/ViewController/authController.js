@@ -25,7 +25,7 @@ class authController {
           const cookieOption = {
             httpOnly: true,
             path: '/',
-            maxAge: new Date(Date.now() + 2 * 60 * 60 * 1000),
+            maxAge: 2 * 60 * 60 * 1000,
             sameSite: true,
             // TODO: False for development, use true for production env (HTTPS)
             secure: false,
