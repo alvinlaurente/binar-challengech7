@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 
 class adminController {
   static getUserlist = async (req, res) => {
-    await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/admin/userlist`)
+    await fetch(`http://${process.env.URL}/api/v1/admin/userlist`)
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 200) {
@@ -19,7 +19,7 @@ class adminController {
   };
 
   static promote = async (req, res) => {
-    await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/admin/promote`, { method: 'PATCH', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
+    await fetch(`http://${process.env.URL}/api/v1/admin/promote`, { method: 'PATCH', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 200) {
@@ -31,7 +31,7 @@ class adminController {
   }
 
   static demote = async (req, res) => {
-    await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/admin/demote`, { method: 'PATCH', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
+    await fetch(`http://${process.env.URL}/api/v1/admin/demote`, { method: 'PATCH', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 200) {
@@ -43,7 +43,7 @@ class adminController {
   }
 
   static deleteUser = async (req, res) => {
-    await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/profile/deleteUser`, { method: 'DELETE', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
+    await fetch(`http://${process.env.URL}/api/v1/profile/deleteUser`, { method: 'DELETE', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 200) {

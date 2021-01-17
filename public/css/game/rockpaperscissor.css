@@ -2,6 +2,11 @@ body, html {
 	scroll-behavior: smooth;
 	text-decoration: none !important;
 	font-family: "Open Sans", sans-serif;
+	background-color: #9c835f;
+}
+
+a {
+  text-decoration: none!important;
 }
 
 /* Header */
@@ -9,11 +14,12 @@ body, html {
 	line-height: 2;
 }
 
-.customHeader a .headerTitle{
-	font-size: 16px;
+.customHeader .headerTitle{
+	font-size: 30px;
 	font-weight: bold;
 	text-transform: uppercase;
 	color: #ffc107;
+	cursor: context-menu;
 }
 
 .bgColor {
@@ -21,7 +27,6 @@ body, html {
 	position: absolute;
 	z-index: -1;
 	top: 0;
-	background-color: #9c835f;
 }
 
 /* Game Content */

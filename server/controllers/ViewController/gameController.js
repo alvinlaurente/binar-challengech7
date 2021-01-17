@@ -1,10 +1,36 @@
 import fetch from 'node-fetch';
 
 class gameController {
-  static getRoom = (req, res) => res.render('rockpaperscissor', { title: 'Rock Paper Scissor', username: req.cookies.username });
+  static play = (req, res) => res.render('playgame', { title: 'PLAY GAME', username: req.cookies.username });
+
+  static singlePlayer = (req, res) => res.render('rockpaperscissor', { title: 'VS COM', username: req.cookies.username });
+
+  static getRoom = async (req, res) => {
+    await fetch(`http://${process.env.URL}/api/v1/game/room`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status === 200) {
+          return res.render('room', { title: 'Game Room', username: req.cookies.username, rooms: data.result });
+        }
+        return res.render('room', { title: 'Game Room', username: req.cookies.username });
+      })
+      .catch((e) => console.log(e));
+  };
+
+  static getRoomById = async (req, res) => {
+    await fetch(`http://${process.env.URL}/api/v1/game/room/${req.params.roomId}`, { method: 'PATCH', body: JSON.stringify(req.cookies), headers: { 'Content-Type': 'application/json' } })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status === 200) {
+          console.log(data);
+        }
+        console.log(data);
+      })
+      .catch((e) => console.log(e));
+  }
 
   static getGameHistory = async (req, res) => {
-    await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/game/history/${req.decoded.userId}`)
+    await fetch(`http://${process.env.URL}/api/v1/game/history/${req.decoded.userId}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 200) {
@@ -16,7 +42,7 @@ class gameController {
   };
 
   static postGameHistory = async (req, res) => {
-    await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/game/history/${req.decoded.userId}`, { method: 'POST', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
+    await fetch(`http://${process.env.URL}/api/v1/game/history/${req.decoded.userId}`, { method: 'POST', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 201) {
@@ -28,7 +54,7 @@ class gameController {
   };
 
   static deleteGameHistory = async (req, res) => {
-    await fetch(`http://localhost:${process.env.PORT_NUM}/api/v1/game/history/${req.decoded.userId}`, { method: 'DELETE', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
+    await fetch(`http://${process.env.URL}/api/v1/game/history/${req.decoded.userId}`, { method: 'DELETE', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 200) {
