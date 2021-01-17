@@ -94,8 +94,8 @@ class Game {
     xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
     const msg = JSON.stringify({
       // Unique Timestamp
-      player_choice: player.choice,
-      comp_choice: comp.choice,
+      PlayerChoice: player.choice,
+      CompChoice: comp.choice,
       result: this.result,
     });
     xhr.send(msg);

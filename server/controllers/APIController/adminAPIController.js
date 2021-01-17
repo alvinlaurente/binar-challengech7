@@ -13,9 +13,9 @@ class adminAPIController {
           },
         ],
       }).then((users) => res.status(200).json({ status: 200, message: 'Success', users }))
-        .catch((error) => res.status(400).json({ error: error.name }));
+        .catch((error) => res.status(500).json({ error: error.name }));
     } catch {
-      return res.status(403).json({ status: 403, message: 'Forbidden.' });
+      return res.status(500).json({ status: 500, message: 'Internal Server Error.' });
     }
   };
 
@@ -33,7 +33,7 @@ class adminAPIController {
           }
           return res.status(422).json({ status: 422, message: 'No user found.' });
         })
-        .catch((error) => res.status(400).json({ error: error.name }));
+        .catch((error) => res.status(500).json({ error: error.name }));
     } catch {
       return res.status(500);
     }
@@ -53,7 +53,7 @@ class adminAPIController {
           }
           return res.status(422).json({ status: 422, message: 'No user found.' });
         })
-        .catch((error) => res.status(400).json({ error: error.name }));
+        .catch((error) => res.status(500).json({ error: error.name }));
     } catch {
       return res.status(500);
     }
