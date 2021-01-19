@@ -26,7 +26,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(methodOverride('_method'));
 
-// TODO : Change Session store for production env
 app.use(cookieParser());
 app.use(logger('dev'));
 
