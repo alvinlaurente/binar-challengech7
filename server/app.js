@@ -11,7 +11,13 @@ import routes from './routes';
 require('dotenv').config();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: 'localhost:3000',
+  credentials: true,
+  exposedHeaders: ['Set-Cookie'],
+  preflightContinue: true,
+  allowedHeaders: 'Content-Type, Authorization, X-Requested-With',
+}));
 app.use(helmet({ contentSecurityPolicy: false }));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));

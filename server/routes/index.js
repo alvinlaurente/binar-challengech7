@@ -7,7 +7,7 @@ import controller from '../controllers/ViewController/controller';
 const router = express.Router();
 
 // Homepage router
-router.get('/', [auth.verifyToken], controller.index);
+router.get('/', [auth.verifyLogin], controller.index);
 router.get('/index', (req, res) => {
   res.redirect('/');
 });

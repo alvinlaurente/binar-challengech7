@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 
 class userController {
   static getProfile = async (req, res) => {
-    await fetch(`http://${process.env.URL}/api/v1/profile/${req.decoded.userId}`)
+    await fetch(`http://${process.env.URL}/api/v1/profile/${req.decoded.userId}`, { method: 'GET', headers: { 'Content-Type': 'application/json', Authorization: `${req.cookies.access_token}` } })
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 403) {
@@ -30,7 +30,7 @@ class userController {
   });
 
   static patchEditProfile = async (req, res) => {
-    await fetch(`http://${process.env.URL}/api/v1/profile/edit/${req.decoded.userId}`, { method: 'PATCH', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
+    await fetch(`http://${process.env.URL}/api/v1/profile/edit/${req.decoded.userId}`, { method: 'PATCH', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json', Authorization: `${req.cookies.access_token}` } })
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 200) {
@@ -42,7 +42,7 @@ class userController {
   };
 
   static patchChangePassword = async (req, res) => {
-    await fetch(`http://${process.env.URL}/api/v1/profile/changePassword/${req.decoded.userId}`, { method: 'PATCH', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
+    await fetch(`http://${process.env.URL}/api/v1/profile/changePassword/${req.decoded.userId}`, { method: 'PATCH', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json', Authorization: `${req.cookies.access_token}` } })
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 200) {
@@ -56,7 +56,7 @@ class userController {
   };
 
   static deleteUser = async (req, res) => {
-    await fetch(`http://${process.env.URL}/api/v1/profile/deleteUser`, { method: 'DELETE', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json' } })
+    await fetch(`http://${process.env.URL}/api/v1/profile/deleteUser`, { method: 'DELETE', body: JSON.stringify(req.body), headers: { 'Content-Type': 'application/json', Authorization: `${req.cookies.access_token}` } })
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 200) {
