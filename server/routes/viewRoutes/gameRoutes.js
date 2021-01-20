@@ -7,7 +7,7 @@ router.get('/', gameController.play);
 router.get('/singleplayer', gameController.singlePlayer);
 
 router.get('/room', gameController.getRoom);
-router.get('/room/:roomId', gameController.getRoomById);
+router.get('/room/:roomId', gameController.enterRoomById);
 
 // Game History
 router.get('/history', gameController.getGameHistory);

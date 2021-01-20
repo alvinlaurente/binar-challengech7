@@ -26,7 +26,7 @@ class gameAPIController {
     }
   };
 
-  static getRoomById = async (req, res) => {
+  static enterRoomById = async (req, res) => {
     try {
       const { roomId } = req.params;
       const { username } = req.body;
@@ -104,7 +104,7 @@ class gameAPIController {
           .then((history) => res.status(201).json({ status: 201, message: 'New history created', history }))
           .catch((error) => res.status(500).json({ error: error.name }));
       }
-      return res.status(400).json({ status: 400, message: 'Bad Request.' });
+      return res.status(400).json({ status: 400, message: 'Invalid Request.' });
     } catch {
       return res.status(500).json({ status: 500, message: 'Internal Server Error.' });
     }

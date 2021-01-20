@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/room', gameAPIController.getRoom);
 router.get('/room/create', gameAPIController.createRoom);
-router.patch('/room/:roomId', gameAPIController.getRoomById);
+router.patch('/room/:roomId', gameAPIController.enterRoomById);
 
 router.get('/history/:id', gameAPIController.getGameHistory);
 router.post('/history/:id', gameAPIController.postGameHistory);
