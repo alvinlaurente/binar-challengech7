@@ -12,10 +12,10 @@ require('dotenv').config();
 
 const app = express();
 app.use(cors({
-  origin: 'localhost:3000',
   credentials: true,
   exposedHeaders: ['Set-Cookie'],
-  preflightContinue: true,
+  methods: 'GET,PUT,PATCH,POST,DELETE',
+  preflightContinue: false,
   allowedHeaders: 'Content-Type, Authorization, X-Requested-With',
 }));
 app.use(helmet({ contentSecurityPolicy: false }));
