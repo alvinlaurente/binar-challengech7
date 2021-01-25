@@ -1,4 +1,3 @@
-# Still in Development
 openapi: 3.0.1
 
 info:
@@ -7,7 +6,7 @@ info:
   version: 0.1.0
   
 servers:
-- url: http://localhost:3001/v1/api
+- url: http://localhost:3001/api/v1
 
 components:
   securitySchemes:
@@ -17,55 +16,27 @@ components:
       bearerFormat: JWT
 
 paths:
-  /posts:
-    get:
-      tags:
-        - posts
-      summary: Get all posts
-      security:
-        - bearerAuth: [] 
-      parameters:
-      - name: sort
-        in: query
-        description: Sort mechanism
-        schema:
-          type: string
-          enum: 
-            - asc
-            - desc
-      responses:
-        200:
-          description: success
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                    format: int64
-                    example: 1
-                  username:
-                    type: string
-                    example: hello
-  /login:
+  /auth/login:
     post:
       tags:
-        - general
-      summary: login
+        - auth
+      summary: Login & Get Token for Authorization
+      security:
+        - bearerAuth: [] 
       requestBody:
         description: Pet object that needs to be added to the store
+        required: true
         content:
-          application/json:
+          application/x-www-form-urlencoded:
             schema:
               type: object
               properties:
-                email:
+                username:
                   type: string
-                  example: "alpha@domain.com"
+                  example: "superadmin"
                 password:
                   type: string
-                  example: password
+                  example: superadmin
       responses:
         200:
           description: success
@@ -74,6 +45,56 @@ paths:
               schema:
                 type: object
                 properties:
-                  token:
+                  status:
+                    type: integer
+                    format: int64
+                    example: 200
+                  message:
                     type: string
-                    example: "token"
+                    example: User superadmin login.
+                  userId:
+                    type: string
+                    example: d423b106-806d-44d6-8a6b-eb07ab9629a5
+                  username:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJkNDIzYjEwNi04MDZkLTQ0ZDYtOGE2Yi1lYjA3YWI5NjI5YTUiLCJ1c2VybmFtZSI6InN1cGVyYWRtaW4iLCJpYXQiOjE2MTExMzIzNTAsImV4cCI6MTYxMTEzOTU1MH0.jo6jX3cJJxDuZgCVzhdvlbfvC75az4RMa1CF8gvlIYs
+  /auth/signup:
+    post:
+      tags:
+        - auth
+      summary: Sign up
+      security:
+        - bearerAuth: [] 
+      requestBody:
+        description: Pet object that needs to be added to the store
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "New Gamer 1234"
+                email:
+                  type: string
+                  example: "newgamer1234@domain.com"
+                username:
+                  type: string
+                  example: "newgamer1234"
+                password:
+                  type: string
+                  example: passnewgamer1234
+      responses:
+        200:
+          description: success
+  /auth/logout/:id:
+    delete:
+      tags:
+        - auth
+      summary: Sign up
+      security:
+        - bearerAuth: [] 
+      responses:
+        200:
+          description: success
